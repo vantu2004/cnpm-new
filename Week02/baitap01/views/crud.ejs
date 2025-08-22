@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>CRUD (MySQL)</title>
+  </head>
+  <body>
+    <h1>CRUD Users (Express 5 + Sequelize 6)</h1>
+
+    <h3>Tạo User</h3>
+    <form method="post" action="/users">
+      <input name="firstName" placeholder="First name" required />
+      <input name="lastName" placeholder="Last name" required />
+      <input name="email" placeholder="Email" required />
+      <input name="address" placeholder="Address" />
+      <input name="phone" placeholder="Phone" />
+      <select name="gender">
+        <option>Male</option>
+        <option>Female</option>
+        <option selected>Other</option>
+      </select>
+      <button type="submit">Create</button>
+    </form>
+
+    <p style="margin-top: 12px"><a href="/users">Xem danh sách Users</a></p>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>All Users</title>
+  </head>
+  <body>
+    <h2>All Users</h2>
+    <p><a href="/">↩️ Về trang CRUD</a></p>
+    <table border="1" cellpadding="6">
+      <tr>
+        <th>#</th>
+        <th>First</th>
+        <th>Last</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Action</th>
+      </tr>
+      <% users.forEach((u, i) => { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= u.firstName %></td>
+        <td><%= u.lastName %></td>
+        <td><%= u.email %></td>
+        <td><%= u.gender %></td>
+        <td>
+          <a href="/users/<%= u.id %>/edit">Edit</a>
+          <form
+            action="/users/<%= u.id %>/delete"
+            method="post"
+            style="display: inline"
+          >
+            <button type="submit" onclick="return confirm('Delete this user?')">
+              Delete
+            </button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </body>
+</html>

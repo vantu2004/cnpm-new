@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Edit User</title></head>
+<body>
+  <h2>Edit User #<%= user.id %></h2>
+  <p><a href="/users">↩️ Quay lại danh sách</a></p>
+
+  <form method="post" action="/users/<%= user.id %>">
+    <input name="firstName" value="<%= user.firstName %>" required />
+    <input name="lastName"  value="<%= user.lastName %>" required />
+    <input name="email"     value="<%= user.email %>" required />
+    <input name="address"   value="<%= user.address || '' %>" />
+    <input name="phone"     value="<%= user.phone || '' %>" />
+    <select name="gender">
+      <option <%= user.gender==='Male'?'selected':'' %> >Male</option>
+      <option <%= user.gender==='Female'?'selected':'' %> >Female</option>
+      <option <%= user.gender==='Other'?'selected':'' %> >Other</option>
+    </select>
+    <button type="submit">Update</button>
+  </form>
+</body></html>

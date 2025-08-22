@@ -1,0 +1,20 @@
+1. Khởi tạo project
+    npm init -y
+
+2. Cài các thư viện cần thiết trước
+    npm i express body-parser dotenv ejs
+    npm i sequelize mysql2
+    npm i -D nodemon sequelize-cli
+
+2. Thêm các lệnh sau vào Scripts của package.json
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "db:init": "sequelize-cli init",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:undo": "sequelize-cli db:migrate:undo"
+
+3. Tạo .env
+
+4. Sửa config.json thành config.js
+
+
