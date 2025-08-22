@@ -6,15 +6,34 @@
     npm i sequelize mysql2
     npm i -D nodemon sequelize-cli
 
-2. Thêm các lệnh sau vào Scripts của package.json
+3. Thêm các lệnh sau vào Scripts của package.json
     "dev": "nodemon app.js",
     "start": "node app.js",
     "db:init": "sequelize-cli init",
     "db:migrate": "sequelize-cli db:migrate",
     "db:undo": "sequelize-cli db:migrate:undo"
 
-3. Tạo .env
+4. Tạo .env
 
-4. Sửa config.json thành config.js
+5. Khởi tạo dự án Sequelize, tạo sẵn cấu trúc thư mục cần thiết
+    npx sequelize-cli init
+
+    trong cây thư mục tự động tạo config/  models/  migrations/  seeders/
+
+
+6. Sửa config.json thành config.js
+
+7. Chạy lệnh sau để sinh file mẫu nhanh Migration + Model
+   npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string,address:string,phone:string,gender:string 
+
+8. Sửa file ...create-user.js trong migrations và user.js trong models
+
+8. Sửa file index.js trong models để tự khởi tạo Sequelize & load model
+
+9. Chạy lệnh npm run db:migrate
+
+
+
+
 
 
