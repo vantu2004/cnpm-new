@@ -1,0 +1,23 @@
+1. Tạo package.json
+
+2. Cài dependencies
+    # Runtime
+    npm i express sequelize mysql2 dotenv
+
+    # Dev
+    npm i -D typescript ts-node nodemon @types/node @types/express sequelize-cli
+
+3. Khởi tạo typescript
+    npx tsc --init
+
+4. Tạo .env
+
+5. Tạo file .sequelizerc ở thư mục gốc để CLI biết đường dẫn thư mục
+
+6. sequelize-config.js đọc .env
+
+7. Tạo khung thư mục (tạo migrations/seeders nếu chưa có)
+    npx sequelize-cli init 
+
+8. Chạy migrations
+    npx sequelize-cli db:migrate
