@@ -1,0 +1,17 @@
+1. backend
+1.1. Tạo package.json
+    -   npm init -y
+
+1.2. Cài dependencies cần thiết
+    -   npm i express mongoose dotenv ejs cors bcrypt jsonwebtoken
+    -   npm i -D @babel/core @babel/node @babel/preset-env nodemon
+
+2. frontend
+2.1. Tạo project React/Vite
+    -   npm create vite@latest
+
+2.2. Cài dependencies cần thiết
+    -   npm install
+
+2.3. Cài 1 số thư viện ngoài
+    -   npm i react-router-dom axios antd @ant-design/icons
