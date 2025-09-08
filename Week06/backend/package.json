@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "seed": "node src/seed/seed.js",
+    "reindex": "node src/seed/reindex.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mongoose": "^8.18.0",
+    "morgan": "^1.10.1"
+  }
+}
