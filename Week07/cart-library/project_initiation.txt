@@ -1,0 +1,21 @@
+1. npm init -y
+
+2. npm i react react-dom
+    - react: core library để viết component, quản lý state, JSX, hooks, v.v.
+    - react-dom: cung cấp API để render component React vào DOM trong trình duyệt
+
+3. npm install --save-dev vite
+    - Cài Vite (công cụ build + dev server) làm development dependency.
+    - --save-dev: nghĩa là thư viện này chỉ dùng lúc phát triển (build, run dev, hot reload), không cần trong môi trường chạy thực tế.
+
+4. npm install --save-dev rollup rollup-plugin-peer-deps-external @rollup/plugin-babel @rollup/plugin-node-resolve @rollup/plugin-commonjs
+    - rollup → công cụ build chính, gom code thành file dist.
+
+    - rollup-plugin-peer-deps-external → bỏ qua thư viện đã khai trong peerDependencies (vd: React), tránh bị đóng gói trùng.
+
+    - @rollup/plugin-babel → dùng Babel dịch JSX/ES6 thành JS thường.
+
+    - @rollup/plugin-node-resolve → giúp Rollup hiểu và bundle các gói trong node_modules.
+
+    - @rollup/plugin-commonjs → chuyển code CommonJS (require/module.exports) sang ESModule để Rollup xử lý được.
+
