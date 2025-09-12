@@ -9,6 +9,7 @@ import productRouter from "./routes/product.route.js";
 dotenv.config();
 
 const app = express();
+// credentials: false: không cho phép gửi cookies, Authorization header, hoặc TLS client certificates từ frontend sang backend.
 app.use(cors({ origin: ["http://localhost:5173"], credentials: false }));
 app.use(express.json());
 app.use(morgan("dev"));

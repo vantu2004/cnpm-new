@@ -1,6 +1,12 @@
 import Category from "../models/Category.js";
 import { es, ES_INDEX } from "../search/es.js";
 
+// helper: convert string param thành number nếu có, nếu rỗng thì bỏ qua
+function parseNumberParam(val) {
+  if (val === undefined || val === null || val === "") return undefined;
+  return Number(val);
+}
+
 // GET /api/search/products
 // q, categorySlug|categoryId, priceMin, priceMax, onSale, minViews, sort(relevance|newest|priceAsc|priceDesc|viewsDesc), page, pageSize
 export const searchProducts = async (req, res) => {
@@ -15,7 +21,7 @@ export const searchProducts = async (req, res) => {
       minViews,
       sort = "relevance",
       page = 1,
-      pageSize = 12,
+      pageSize = 5,
     } = req.query;
 
     let catId = categoryId;
@@ -31,6 +37,7 @@ export const searchProducts = async (req, res) => {
     const should = [];
     const filter = [];
 
+    // search text
     if (q && q.trim()) {
       should.push(
         {
@@ -47,20 +54,32 @@ export const searchProducts = async (req, res) => {
       must.push({ bool: { should, minimum_should_match: 1 } });
     }
 
+    // category filter
     if (catId) filter.push({ term: { categoryId: catId } });
     if (catSlug) filter.push({ term: { categorySlug: catSlug } });
 
+    // price filter
+    const min = parseNumberParam(priceMin);
+    const max = parseNumberParam(priceMax);
     const priceRange = {};
-    if (priceMin != null) priceRange.gte = Number(priceMin);
-    if (priceMax != null) priceRange.lte = Number(priceMax);
-    if (Object.keys(priceRange).length)
+    if (min !== undefined) priceRange.gte = min;
+    if (max !== undefined) priceRange.lte = max;
+    if (Object.keys(priceRange).length) {
       filter.push({ range: { price: priceRange } });
+    }
 
-    if (onSale != null && onSale !== "")
+    // onSale filter
+    if (onSale !== undefined && onSale !== "") {
       filter.push({ term: { onSale: onSale === "true" } });
-    if (minViews != null && minViews !== "")
-      filter.push({ range: { views: { gte: Number(minViews) } } });
+    }
 
+    // minViews filter
+    const viewsMin = parseNumberParam(minViews);
+    if (viewsMin !== undefined) {
+      filter.push({ range: { views: { gte: viewsMin } } });
+    }
+
+    // sort
     let sortSpec = [];
     if (sort === "newest") sortSpec = [{ createdAt: "desc" }];
     else if (sort === "priceAsc") sortSpec = [{ price: "asc" }];
@@ -68,11 +87,12 @@ export const searchProducts = async (req, res) => {
     else if (sort === "viewsDesc") sortSpec = [{ views: "desc" }];
     else sortSpec = ["_score"]; // relevance
 
+    // pagination
     const from = Math.max(
       0,
-      (Number(page) - 1) * Math.min(Number(pageSize) || 12, 60)
+      (Number(page) - 1) * Math.min(Number(pageSize) || 5, 60)
     );
-    const size = Math.min(Number(pageSize) || 12, 60);
+    const size = Math.min(Number(pageSize) || 5, 60);
 
     const body = {
       query: { bool: { must, filter } },
@@ -80,6 +100,9 @@ export const searchProducts = async (req, res) => {
       from,
       size,
     };
+
+    console.log("Elasticsearch query body:", JSON.stringify(body, null, 2)); // log debug
+
     const { hits } = await es.search({ index: ES_INDEX, body });
 
     const items = hits.hits.map((h) => ({
@@ -87,6 +110,7 @@ export const searchProducts = async (req, res) => {
       score: h._score,
       ...h._source,
     }));
+
     res.json({
       success: true,
       items,

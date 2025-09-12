@@ -13,7 +13,7 @@ export default function Category() {
 
   useEffect(() => {
     setLoading(true);
-    fetchProductsCursor({ categorySlug: slug, limit: 12 }).then((data) => {
+    fetchProductsCursor({ categorySlug: slug, limit: 5 }).then((data) => {
       setItems(data.items);
       setNextCursor(data.nextCursor);
       setLoading(false);
@@ -30,7 +30,7 @@ export default function Category() {
           setIsFetchingMore(true);
           const data = await fetchProductsCursor({
             categorySlug: slug,
-            limit: 12,
+            limit: 5,
             after: nextCursor,
           });
           setItems((prev) => [...prev, ...data.items]);

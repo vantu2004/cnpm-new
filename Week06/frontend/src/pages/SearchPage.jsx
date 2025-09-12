@@ -10,7 +10,7 @@ export default function SearchPage() {
     items: [],
     total: 0,
     page: 1,
-    pageSize: 12,
+    pageSize: 5,
   });
 
   const q = params.get("q") || "";
@@ -25,6 +25,7 @@ export default function SearchPage() {
   useEffect(() => {
     fetchCategories().then(setCats);
   }, []);
+
   useEffect(() => {
     searchProducts({
       q,
@@ -35,7 +36,7 @@ export default function SearchPage() {
       minViews,
       sort,
       page,
-      pageSize: 12,
+      pageSize: 5,
     }).then(setData);
   }, [q, categorySlug, priceMin, priceMax, onSale, minViews, sort, page]);
 

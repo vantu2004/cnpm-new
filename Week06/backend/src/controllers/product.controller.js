@@ -57,8 +57,8 @@ export const deleteProduct = async (req, res) => {
 // Cursor-based cho infinite scroll theo danh mục
 export const getProducts = async (req, res) => {
   try {
-    const { categoryId, categorySlug, limit = 12, after } = req.query;
-    const pageSize = Math.min(Number(limit) || 12, 60);
+    const { categoryId, categorySlug, limit = 5, after } = req.query;
+    const pageSize = Math.min(Number(limit) || 5, 60);
 
     let catId = categoryId;
     if (!catId && categorySlug) {
@@ -72,12 +72,10 @@ export const getProducts = async (req, res) => {
       catId = cat._id;
     }
     if (!catId)
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: "categoryId hoặc categorySlug là bắt buộc",
-        });
+      return res.status(400).json({
+        success: false,
+        error: "categoryId hoặc categorySlug là bắt buộc",
+      });
 
     const filter = { categoryId: new mongoose.Types.ObjectId(catId) };
     if (after) {
@@ -103,7 +101,7 @@ export const getProducts = async (req, res) => {
 // (tuỳ chọn) Pagination truyền thống
 export const getProductsPaged = async (req, res) => {
   try {
-    const { page = 1, pageSize = 12, categoryId } = req.query;
+    const { page = 1, pageSize = 5, categoryId } = req.query;
     if (!categoryId)
       return res
         .status(400)

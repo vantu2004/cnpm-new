@@ -25,11 +25,11 @@ export const createProduct = async (req, res) => {
 };
 
 // GET /api/products (cursor-based)
-// query: categoryId | categorySlug, limit=12, after=<ObjectId>
+// query: categoryId | categorySlug, limit=5, after=<ObjectId>
 export const getProducts = async (req, res) => {
   try {
     const { categoryId, categorySlug, limit = 5, after } = req.query;
-    const pageSize = Math.min(Number(limit) || 12, 60);
+    const pageSize = Math.min(Number(limit) || 5, 60);
 
     let catId = categoryId;
     if (!catId && categorySlug) {
@@ -71,10 +71,10 @@ export const getProducts = async (req, res) => {
   }
 };
 
-// (Tuỳ chọn) GET /api/products/paged?page=1&pageSize=12&categoryId=...
+// (Tuỳ chọn) GET /api/products/paged?page=1&pageSize5&categoryId=...
 export const getProductsPaged = async (req, res) => {
   try {
-    const { page = 1, pageSize = 12, categoryId } = req.query;
+    const { page = 1, pageSize = 5, categoryId } = req.query;
     if (!categoryId)
       return res
         .status(400)

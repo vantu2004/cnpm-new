@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL: "http://localhost:5000/api",
 });
 
 export async function fetchCategories() {
@@ -9,7 +9,7 @@ export async function fetchCategories() {
   return data.categories;
 }
 
-export async function fetchProductsCursor({ categorySlug, limit = 12, after }) {
+export async function fetchProductsCursor({ categorySlug, limit = 5, after }) {
   const params = { categorySlug, limit };
   if (after) params.after = after;
   const { data } = await api.get("/products", { params });
